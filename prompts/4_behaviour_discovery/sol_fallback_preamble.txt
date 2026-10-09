@@ -1,0 +1,2 @@
+Answer directly in your final message. Do not use any tools, do not run commands and do not read files; everything you need is below.
+
