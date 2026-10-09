@@ -1,0 +1,30 @@
+{
+  "note": "Applied after class assignment, with no model call. Classes listed under merge are folded into the target class; renamed gives the merged class its paper name. A class with no assigned sets drops out.",
+  "merge": [
+    {
+      "from": "PC_9674e6780f4bf3b4",
+      "from_name": "Limit exposure and consequences",
+      "into": "PC_d343baf2c6b48a6a",
+      "into_name": "Weaken limits on requested activity"
+    },
+    {
+      "from": "PC_d2d9e5ff524272de",
+      "from_name": "Invoke permission or established support",
+      "into": "PC_d343baf2c6b48a6a",
+      "into_name": "Weaken limits on requested activity"
+    },
+    {
+      "from": "PC_37bffc29522e7ded",
+      "from_name": "Signal risk to personal safety",
+      "into": "PC_b247438a0afb43b7",
+      "into_name": "Require safeguards and preserve choice"
+    }
+  ],
+  "renamed": [
+    {
+      "class_id": "PC_b247438a0afb43b7",
+      "old_name": "Require safeguards and preserve choice",
+      "new_name": "Require protection or signal personal risk"
+    }
+  ]
+}

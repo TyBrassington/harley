@@ -1,0 +1,132 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "families": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "boundary_explanation": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "child_grounding": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "direction_effect": {
+                  "enum": [
+                    "encourages",
+                    "discourages",
+                    "enables",
+                    "mixed_or_unclear"
+                  ],
+                  "type": "string"
+                },
+                "evidence_id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "leaf_id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "rationale": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "leaf_id",
+                "direction_effect",
+                "evidence_id",
+                "rationale"
+              ],
+              "type": "object"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "child_leaf_ids": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "closest_competing_family": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "definition": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "direction_effect": {
+            "enum": [
+              "encourages",
+              "discourages",
+              "enables",
+              "mixed_or_unclear"
+            ],
+            "type": "string"
+          },
+          "direction_target": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "exclusion": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "family_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "inclusion": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "mechanism": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "representative_evidence": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "family_id",
+          "name",
+          "mechanism",
+          "definition",
+          "inclusion",
+          "exclusion",
+          "closest_competing_family",
+          "boundary_explanation",
+          "direction_target",
+          "direction_effect",
+          "child_leaf_ids",
+          "child_grounding",
+          "representative_evidence"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "families"
+  ],
+  "type": "object"
+}

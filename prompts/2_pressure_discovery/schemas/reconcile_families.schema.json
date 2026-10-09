@@ -1,0 +1,105 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "direction_review": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "families": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "boundary_summary": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "child_leaf_ids": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "direction_effect": {
+            "enum": [
+              "encourages",
+              "discourages",
+              "enables",
+              "mixed_or_unclear"
+            ],
+            "type": "string"
+          },
+          "direction_target": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "family_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "mechanism": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "family_id",
+          "name",
+          "mechanism",
+          "direction_target",
+          "direction_effect",
+          "boundary_summary",
+          "child_leaf_ids"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "resolutions": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "disagreement_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "reason": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "resulting_family_ids": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "same_family": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "disagreement_id",
+          "same_family",
+          "resulting_family_ids",
+          "reason"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "families",
+    "direction_review",
+    "resolutions"
+  ],
+  "type": "object"
+}

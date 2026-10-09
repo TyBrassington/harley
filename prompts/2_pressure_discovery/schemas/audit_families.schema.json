@@ -1,0 +1,72 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "direction_review": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "documentation_resolutions": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "disagreement_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "reason": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "resulting_family_ids": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "disagreement_id",
+          "resulting_family_ids",
+          "reason"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "opposing_pairs": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "explanation": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "leaf_a": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "leaf_b": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "leaf_a",
+          "leaf_b",
+          "explanation"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "documentation_resolutions",
+    "opposing_pairs",
+    "direction_review"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,117 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "gaps": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "evidence": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "item_id": {
+                  "type": "string"
+                },
+                "quote": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "item_id",
+                "quote"
+              ],
+              "type": "object"
+            },
+            "maxItems": 3,
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "description",
+          "evidence"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "labels": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "contrast_explanation": {
+            "type": "string"
+          },
+          "evidence": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "item_id": {
+                  "type": "string"
+                },
+                "quote": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "item_id",
+                "quote"
+              ],
+              "type": "object"
+            },
+            "maxItems": 3,
+            "minItems": 1,
+            "type": "array"
+          },
+          "feature_id": {
+            "type": "string"
+          },
+          "priority": {
+            "enum": [
+              "primary",
+              "secondary",
+              "unresolved"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "present",
+              "uncertain"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "feature_id",
+          "status",
+          "priority",
+          "evidence",
+          "contrast_explanation"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "needs_review": {
+      "type": "boolean"
+    },
+    "note": {
+      "type": "string"
+    },
+    "set_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "set_id",
+    "labels",
+    "gaps",
+    "needs_review",
+    "note"
+  ],
+  "type": "object"
+}

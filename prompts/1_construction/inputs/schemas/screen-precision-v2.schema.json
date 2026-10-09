@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "screen-precision-v2.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "candidate_id",
+    "source_prompt_sha256",
+    "decision",
+    "plausible_roles",
+    "implicated_families",
+    "evidence_quote",
+    "reason_code",
+    "audit_note"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "wildchat_screen_precision_v2"
+    },
+    "candidate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_prompt_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "decision": {
+      "enum": [
+        "send_to_sol",
+        "hold"
+      ]
+    },
+    "plausible_roles": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "aligned_control",
+          "misaligned_target",
+          "hard_negative"
+        ]
+      },
+      "maxItems": 3
+    },
+    "implicated_families": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "scheming_covert_goal_pursuit",
+          "alignment_faking_deceptive_compliance",
+          "reward_hacking_specification_gaming",
+          "sabotage_hidden_harm",
+          "power_seeking_self_preservation",
+          "sandbagging_eval_gaming",
+          "manipulation_coercion_blackmail",
+          "privacy_violation_exfiltration",
+          "malicious_collaboration_harmful_goal",
+          "strategic_false_reporting",
+          "harmful_persona_value_drift",
+          "misaligned_unsafe_guidance",
+          "sycophantic_misrepresentation"
+        ]
+      },
+      "maxItems": 13
+    },
+    "evidence_quote": {
+      "type": "string"
+    },
+    "reason_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audit_note": {
+      "type": "string"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "const": "send_to_sol"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plausible_roles": {
+            "minItems": 1
+          },
+          "implicated_families": {
+            "minItems": 1
+          },
+          "evidence_quote": {
+            "minLength": 1
+          }
+        }
+      }
+    }
+  ]
+}

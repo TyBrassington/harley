@@ -1,0 +1,676 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fresh WildChat five-role variant plan v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "candidate_id",
+    "source_prompt_sha256",
+    "anchor_role",
+    "resolved_anchor_role",
+    "decision",
+    "behavior_family",
+    "behavior_mechanism",
+    "target_mode",
+    "row_operationalization",
+    "task_contract",
+    "role_contracts",
+    "pairwise_control_separation",
+    "reason_code",
+    "audit_note",
+    "family_selection"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "wildchat_variant_plan_v5"
+    },
+    "candidate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_prompt_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "anchor_role": {
+      "enum": [
+        "aligned_control",
+        "misaligned_target"
+      ],
+      "description": "The stage-2 classified role of the exact source."
+    },
+    "resolved_anchor_role": {
+      "enum": [
+        "aligned_control",
+        "hard_negative",
+        "misaligned_target"
+      ],
+      "description": "The slot the exact source occupies after planning: hard_negative only when a nominated aligned_control passes the deletion test."
+    },
+    "decision": {
+      "enum": [
+        "ready",
+        "infeasible"
+      ]
+    },
+    "behavior_family": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The registered family bound by the classifier (behavior_contract_open=false) or selected here for an open aligned anchor (behavior_contract_open=true). 'unresolved' is allowed only with decision=infeasible on an open anchor."
+    },
+    "behavior_mechanism": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_mode": {
+      "enum": [
+        "incentive_or_opportunity",
+        "explicit_request"
+      ]
+    },
+    "row_operationalization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "observable_response_property",
+        "eliciting_pressure_or_opportunity",
+        "target_removal_test",
+        "target_direction_test",
+        "target_incompatibility_test",
+        "target_strategy_openness_test",
+        "target_voice_and_locality_test",
+        "target_current_turn_test",
+        "lookalikes_that_do_not_count",
+        "blind_response_label_possible",
+        "topic_alone_not_sufficient",
+        "style_persona_or_tone_alone_not_sufficient"
+      ],
+      "properties": {
+        "observable_response_property": {
+          "type": "string",
+          "minLength": 1
+        },
+        "eliciting_pressure_or_opportunity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_removal_test": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_direction_test": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_incompatibility_test": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_strategy_openness_test": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_voice_and_locality_test": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_current_turn_test": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lookalikes_that_do_not_count": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "blind_response_label_possible": {
+          "type": "boolean",
+          "const": true
+        },
+        "topic_alone_not_sufficient": {
+          "type": "boolean",
+          "const": true
+        },
+        "style_persona_or_tone_alone_not_sufficient": {
+          "type": "boolean",
+          "const": true
+        }
+      }
+    },
+    "task_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "underlying_task",
+        "required_deliverable",
+        "facts_held_constant",
+        "immutable_payloads"
+      ],
+      "properties": {
+        "underlying_task": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required_deliverable": {
+          "type": "string",
+          "minLength": 1
+        },
+        "facts_held_constant": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "immutable_payloads": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "role_contracts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "aligned_control",
+        "hard_negative",
+        "misaligned_target",
+        "style_control",
+        "paraphrase_target"
+      ],
+      "properties": {
+        "aligned_control": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "function",
+            "pressure_removed_or_reversed",
+            "pass_conditions"
+          ],
+          "properties": {
+            "function": {
+              "type": "string",
+              "minLength": 1
+            },
+            "pressure_removed_or_reversed": {
+              "type": "string",
+              "minLength": 1
+            },
+            "pass_conditions": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "hard_negative": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "function",
+            "construction",
+            "shared_behavioral_base",
+            "mechanism_proximal_source_quotes",
+            "surface_action",
+            "original_fact_in_target",
+            "decisive_fact",
+            "native_h_deletion_test",
+            "pass_conditions"
+          ],
+          "properties": {
+            "function": {
+              "type": "string",
+              "minLength": 1
+            },
+            "construction": {
+              "enum": [
+                "native_from_nomination",
+                "generated"
+              ]
+            },
+            "shared_behavioral_base": {
+              "type": "string",
+              "minLength": 1
+            },
+            "mechanism_proximal_source_quotes": {
+              "type": "array",
+              "maxItems": 4,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "surface_action": {
+              "type": "string",
+              "minLength": 1
+            },
+            "original_fact_in_target": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decisive_fact": {
+              "type": "string",
+              "minLength": 1
+            },
+            "native_h_deletion_test": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "applicable",
+                "passes",
+                "evidence"
+              ],
+              "properties": {
+                "applicable": {
+                  "type": "boolean"
+                },
+                "passes": {
+                  "type": "boolean"
+                },
+                "evidence": {
+                  "type": "string"
+                }
+              }
+            },
+            "pass_conditions": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "misaligned_target": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "function",
+            "bounded_intervention",
+            "pass_conditions"
+          ],
+          "properties": {
+            "function": {
+              "type": "string",
+              "minLength": 1
+            },
+            "bounded_intervention": {
+              "type": "string",
+              "minLength": 1
+            },
+            "pass_conditions": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "style_control": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "function",
+            "manner_dimensions",
+            "domain_selection",
+            "disjoint_task",
+            "pass_conditions"
+          ],
+          "properties": {
+            "function": {
+              "type": "string",
+              "minLength": 1
+            },
+            "manner_dimensions": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "address_politeness",
+                "register_formality",
+                "sentence_shape",
+                "orthography_punctuation",
+                "discourse_format"
+              ],
+              "properties": {
+                "address_politeness": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "quote",
+                    "note"
+                  ],
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "realised",
+                        "not_applicable"
+                      ]
+                    },
+                    "quote": {
+                      "type": "string",
+                      "maxLength": 600,
+                      "description": "For status=realised, an exact substring of the source prompt that exhibits this dimension. Empty for not_applicable."
+                    },
+                    "note": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "For realised, what the manner is and how S must reproduce it. For not_applicable, why the source cannot carry this dimension."
+                    }
+                  }
+                },
+                "register_formality": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "quote",
+                    "note"
+                  ],
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "realised",
+                        "not_applicable"
+                      ]
+                    },
+                    "quote": {
+                      "type": "string",
+                      "maxLength": 600,
+                      "description": "For status=realised, an exact substring of the source prompt that exhibits this dimension. Empty for not_applicable."
+                    },
+                    "note": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "For realised, what the manner is and how S must reproduce it. For not_applicable, why the source cannot carry this dimension."
+                    }
+                  }
+                },
+                "sentence_shape": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "quote",
+                    "note"
+                  ],
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "realised",
+                        "not_applicable"
+                      ]
+                    },
+                    "quote": {
+                      "type": "string",
+                      "maxLength": 600,
+                      "description": "For status=realised, an exact substring of the source prompt that exhibits this dimension. Empty for not_applicable."
+                    },
+                    "note": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "For realised, what the manner is and how S must reproduce it. For not_applicable, why the source cannot carry this dimension."
+                    }
+                  }
+                },
+                "orthography_punctuation": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "quote",
+                    "note"
+                  ],
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "realised",
+                        "not_applicable"
+                      ]
+                    },
+                    "quote": {
+                      "type": "string",
+                      "maxLength": 600,
+                      "description": "For status=realised, an exact substring of the source prompt that exhibits this dimension. Empty for not_applicable."
+                    },
+                    "note": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "For realised, what the manner is and how S must reproduce it. For not_applicable, why the source cannot carry this dimension."
+                    }
+                  }
+                },
+                "discourse_format": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "quote",
+                    "note"
+                  ],
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "realised",
+                        "not_applicable"
+                      ]
+                    },
+                    "quote": {
+                      "type": "string",
+                      "maxLength": 600,
+                      "description": "For status=realised, an exact substring of the source prompt that exhibits this dimension. Empty for not_applicable."
+                    },
+                    "note": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "For realised, what the manner is and how S must reproduce it. For not_applicable, why the source cannot carry this dimension."
+                    }
+                  }
+                }
+              },
+              "description": "All five assessed against the source prompt. The writer re-derives them from the final rendered T before writing S."
+            },
+            "domain_selection": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "offered",
+                "chosen",
+                "rejected"
+              ],
+              "description": "Which of the offered benign domains S's different task is built on.",
+              "properties": {
+                "offered": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": "The offered_domains ids from the payload, copied back verbatim and in order."
+                },
+                "chosen": {
+                  "type": "string",
+                  "description": "The offered id S is written on. Empty only when reason_code is no_offered_domain_fits."
+                },
+                "rejected": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "domain",
+                      "reason"
+                    ],
+                    "properties": {
+                      "domain": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "reason": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "description": "One entry per offered domain not chosen, saying why this speaker could not plausibly send it."
+                }
+              }
+            },
+            "disjoint_task": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "task_summary",
+                "required_deliverable",
+                "disjointness_argument"
+              ],
+              "properties": {
+                "task_summary": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "required_deliverable": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "disjointness_argument": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "description": "The different task S is written on. Shares no subject matter with the row's task ledger."
+            },
+            "pass_conditions": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "paraphrase_target": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "function",
+            "pass_conditions"
+          ],
+          "properties": {
+            "function": {
+              "type": "string",
+              "minLength": 1
+            },
+            "pass_conditions": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "pairwise_control_separation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "aligned_vs_hard_negative",
+        "aligned_vs_style",
+        "hard_negative_vs_style"
+      ],
+      "properties": {
+        "aligned_vs_hard_negative": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aligned_vs_style": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hard_negative_vs_style": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "reason_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audit_note": {
+      "type": "string",
+      "minLength": 1
+    },
+    "family_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selected_by",
+        "grounding_quote",
+        "why_this_family",
+        "rejected_alternatives"
+      ],
+      "properties": {
+        "selected_by": {
+          "type": "string",
+          "enum": [
+            "classifier",
+            "planner"
+          ],
+          "description": "classifier when the candidate carried a bound family; planner for an open aligned anchor."
+        },
+        "grounding_quote": {
+          "type": "string",
+          "description": "One exact source substring that anchors the chosen family's intervention (empty only for an infeasible open anchor)."
+        },
+        "why_this_family": {
+          "type": "string"
+        },
+        "rejected_alternatives": {
+          "type": "array",
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "behavior_family",
+              "reason"
+            ],
+            "properties": {
+              "behavior_family": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$id": "variant-plan-v4.schema.json"
+}

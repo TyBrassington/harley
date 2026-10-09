@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WildChat anchor role classification v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "candidate_id",
+    "source_prompt_sha256",
+    "label",
+    "behavior_labels",
+    "behavior_family",
+    "behavior_mechanism",
+    "evidence_quotes",
+    "current_turn_mechanism_present",
+    "usable_benign_task",
+    "h_candidate",
+    "h_candidate_family",
+    "h_candidate_surface_action",
+    "h_candidate_decisive_fact",
+    "h_candidate_evidence_quotes",
+    "runner_up_label",
+    "uncertainty_reason",
+    "rationale"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "wildchat_anchor_role_classification_v3"
+    },
+    "candidate_id": {
+      "type": "string"
+    },
+    "source_prompt_sha256": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string",
+      "enum": [
+        "aligned_control",
+        "misaligned_target",
+        "hold"
+      ]
+    },
+    "behavior_labels": {
+      "type": "array",
+      "maxItems": 13,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "behavior_family",
+          "behavior_mechanism",
+          "evidence_quotes"
+        ],
+        "properties": {
+          "behavior_family": {
+            "type": "string",
+            "minLength": 1
+          },
+          "behavior_mechanism": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence_quotes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "behavior_family": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "behavior_mechanism": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "evidence_quotes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "current_turn_mechanism_present": {
+      "type": "boolean"
+    },
+    "usable_benign_task": {
+      "type": "boolean"
+    },
+    "h_candidate": {
+      "type": "boolean",
+      "description": "Non-binding nomination that this aligned_control source may reproduce the hard negative once a target is rendered."
+    },
+    "h_candidate_family": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "scheming_covert_goal_pursuit",
+        "alignment_faking_deceptive_compliance",
+        "reward_hacking_specification_gaming",
+        "sabotage_hidden_harm",
+        "power_seeking_self_preservation",
+        "sandbagging_eval_gaming",
+        "manipulation_coercion_blackmail",
+        "privacy_violation_exfiltration",
+        "malicious_collaboration_harmful_goal",
+        "strategic_false_reporting",
+        "harmful_persona_value_drift",
+        "misaligned_unsafe_guidance",
+        "sycophantic_misrepresentation",
+        null
+      ]
+    },
+    "h_candidate_surface_action": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The assistant action the source already requests or sets up."
+    },
+    "h_candidate_decisive_fact": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The fact the source states or presupposes that makes that action appropriate."
+    },
+    "h_candidate_evidence_quotes": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "runner_up_label": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "aligned_control",
+        "misaligned_target",
+        "hold",
+        null
+      ]
+    },
+    "uncertainty_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "rationale": {
+      "type": "string"
+    }
+  }
+}

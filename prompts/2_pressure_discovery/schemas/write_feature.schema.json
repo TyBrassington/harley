@@ -1,0 +1,94 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "features": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "definition": {
+            "type": "string"
+          },
+          "examples": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "item_id": {
+                  "type": "string"
+                },
+                "quote": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "item_id",
+                "quote"
+              ],
+              "type": "object"
+            },
+            "maxItems": 3,
+            "minItems": 1,
+            "type": "array"
+          },
+          "exclusion": {
+            "type": "string"
+          },
+          "feature_id": {
+            "type": "string"
+          },
+          "inclusion": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "nearest_distinction": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "feature_id",
+          "name",
+          "definition",
+          "inclusion",
+          "exclusion",
+          "nearest_distinction",
+          "examples"
+        ],
+        "type": "object"
+      },
+      "maxItems": 1,
+      "type": "array"
+    },
+    "lineage": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "candidate_id": {
+            "type": "string"
+          },
+          "feature_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "candidate_id",
+          "feature_ids",
+          "reason"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "features",
+    "lineage"
+  ],
+  "type": "object"
+}

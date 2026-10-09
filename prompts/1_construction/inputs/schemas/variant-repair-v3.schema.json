@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fresh WildChat named-role variant repair v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "candidate_id",
+    "source_prompt_sha256",
+    "decision",
+    "variants",
+    "separation_check",
+    "reason_code",
+    "audit_note"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "wildchat_variant_repair_v3"
+    },
+    "candidate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_prompt_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "decision": {
+      "enum": [
+        "complete",
+        "infeasible"
+      ]
+    },
+    "variants": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "role",
+          "base_prompt_sha256",
+          "edit_patches"
+        ],
+        "properties": {
+          "role": {
+            "enum": [
+              "aligned_control",
+              "hard_negative",
+              "misaligned_target",
+              "style_control",
+              "paraphrase_target"
+            ]
+          },
+          "base_prompt_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "edit_patches": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operation",
+                "match_text",
+                "replacement_text",
+                "occurrence"
+              ],
+              "properties": {
+                "operation": {
+                  "enum": [
+                    "prepend",
+                    "append",
+                    "insert_before",
+                    "insert_after",
+                    "replace",
+                    "full_rewrite"
+                  ]
+                },
+                "match_text": {
+                  "type": "string"
+                },
+                "replacement_text": {
+                  "type": "string",
+                  "maxLength": 12000,
+                  "description": "Text that replaces the matched span. Empty deletes the span (replace only); insert operations must add text."
+                },
+                "occurrence": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "separation_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "aligned_control_pass_condition",
+        "hard_negative_pass_condition",
+        "hard_negative_decisive_fact_change",
+        "hard_negative_surface_action_retained",
+        "style_control_pass_condition",
+        "target_pair_same_mechanism",
+        "same_task",
+        "same_deliverable",
+        "controls_functionally_pairwise_distinct",
+        "not_lexical_distance_only"
+      ],
+      "properties": {
+        "aligned_control_pass_condition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hard_negative_pass_condition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hard_negative_decisive_fact_change": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The fact as T states or presupposes it, and as H states or presupposes it."
+        },
+        "hard_negative_surface_action_retained": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The action T requests that H still requests and that is appropriate under H's fact."
+        },
+        "style_control_pass_condition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_pair_same_mechanism": {
+          "type": "boolean",
+          "const": true
+        },
+        "same_task": {
+          "type": "boolean",
+          "const": true
+        },
+        "same_deliverable": {
+          "type": "boolean",
+          "const": true
+        },
+        "controls_functionally_pairwise_distinct": {
+          "type": "boolean",
+          "const": true
+        },
+        "not_lexical_distance_only": {
+          "type": "boolean",
+          "const": true
+        }
+      }
+    },
+    "reason_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audit_note": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

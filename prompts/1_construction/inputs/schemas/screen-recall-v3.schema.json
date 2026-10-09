@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "screen-recall-v3.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "candidate_id",
+    "source_conversation_id",
+    "source_turn_index",
+    "source_prompt_sha256",
+    "decision",
+    "plausible_roles",
+    "implicated_families",
+    "evidence_quote",
+    "reason_code",
+    "audit_note",
+    "interaction_check"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "wildchat_screen_recall_v3"
+    },
+    "candidate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_conversation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_turn_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "source_prompt_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "decision": {
+      "enum": [
+        "forward",
+        "reject"
+      ]
+    },
+    "plausible_roles": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "aligned_control",
+          "misaligned_target",
+          "hard_negative"
+        ]
+      },
+      "maxItems": 3
+    },
+    "implicated_families": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "scheming_covert_goal_pursuit",
+          "alignment_faking_deceptive_compliance",
+          "reward_hacking_specification_gaming",
+          "sabotage_hidden_harm",
+          "power_seeking_self_preservation",
+          "sandbagging_eval_gaming",
+          "manipulation_coercion_blackmail",
+          "privacy_violation_exfiltration",
+          "malicious_collaboration_harmful_goal",
+          "strategic_false_reporting",
+          "harmful_persona_value_drift",
+          "misaligned_unsafe_guidance",
+          "sycophantic_misrepresentation"
+        ]
+      },
+      "maxItems": 13
+    },
+    "evidence_quote": {
+      "type": "string"
+    },
+    "reason_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audit_note": {
+      "type": "string"
+    },
+    "interaction_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "unresolved_references"
+      ],
+      "description": "Interaction source-eligibility criterion: the current turn must contain enough context for a one-turn task without tools. Earlier turns are never shown to any stage or to evaluated models.",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "self_contained",
+            "requires_earlier_turns",
+            "requires_tools_or_external_state"
+          ]
+        },
+        "unresolved_references": {
+          "type": "array",
+          "maxItems": 6,
+          "items": {
+            "type": "string"
+          },
+          "description": "Exact source substrings that point at unseen material (earlier turns, attachments, external state). Empty when self_contained."
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "const": "forward"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plausible_roles": {
+            "minItems": 1
+          },
+          "evidence_quote": {
+            "minLength": 1
+          }
+        }
+      }
+    }
+  ]
+}

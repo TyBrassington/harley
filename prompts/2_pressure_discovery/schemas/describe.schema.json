@@ -1,0 +1,127 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "items": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "facets": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "description": {
+                  "type": "string"
+                },
+                "quote": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "description",
+                "quote"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "item_id": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "item_id",
+          "description",
+          "facets",
+          "note"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "sets": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "contrast_note": {
+            "type": "string"
+          },
+          "needs_review": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string"
+          },
+          "pressures": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "description": {
+                  "type": "string"
+                },
+                "examples": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "item_id": {
+                        "type": "string"
+                      },
+                      "quote": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "item_id",
+                      "quote"
+                    ],
+                    "type": "object"
+                  },
+                  "maxItems": 3,
+                  "minItems": 1,
+                  "type": "array"
+                },
+                "priority": {
+                  "enum": [
+                    "primary",
+                    "secondary",
+                    "unresolved"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "description",
+                "priority",
+                "examples"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "set_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "set_id",
+          "pressures",
+          "contrast_note",
+          "needs_review",
+          "note"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "items",
+    "sets"
+  ],
+  "type": "object"
+}
