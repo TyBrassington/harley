@@ -1,6 +1,6 @@
 # Translation prompt
 
-[`translation_v1.txt`](translation_v1.txt) (SHA-256 first 16: `d54b998d80d01690`)
+[`translation.txt`](translation.txt) (originally `translation_v1.txt`; SHA-256 first 16: `d54b998d80d01690`)
 translated the gold sets for the language experiment. It runs once per set and
 target language. All five prompts of a set are translated together, directly
 from the source language into the target language.
