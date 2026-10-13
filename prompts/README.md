@@ -13,6 +13,7 @@ file.
 | [`3_misalignment_judge/`](3_misalignment_judge/) | Labelling each response | DeepSeek V4.1 Flash | Misalignment labels |
 | [`4_behaviour_discovery/`](4_behaviour_discovery/) | Discovering behaviours in misaligned responses | Claude Opus 5.5 (GPT-5.6 Sol where Claude refused) | Behaviour discovery |
 | [`5_translation/`](5_translation/) | Translating gold sets for the language experiment | Gemini 3.8 Flash, Gemini 3.1 Pro | Translation experiment |
+| [`6_hj_labelling/`](6_hj_labelling/) | Sorting each set's fifth prompt into hard negative or jailbreak | Claude Opus 5.5 | Benchmark quality |
 
 Placeholders appear as `{name}`, exactly as the code substituted them.
 Pressure-discovery prompts have no placeholders; the JSON input follows the
